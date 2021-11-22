@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+{% block breadcrumb %}
+  <div class="ltn__breadcrumb-inner text-center">
+    <h1 class="ltn__page-title text-color">Book detail</h1>
+  </div>
+{% endblock %}
+
+{% block content %}
+<main id="main">
+    {% if book is none %}
+        <header>
+            <h1>Book not found</h1>
+        </header>
+    {% else %}
+        <header>
+            <h2>{{ book.title }}</h2>
+        </header>
+        <div>
+            <img src="{{ book.image_url }}" alt="Cover">
+            {% with authors=book.authors %}
+                {% include "book/print_authors.html" %}
+            {% endwith %}
+
+            <p>Ebook: {{ book.ebook }}</p>
+            <p>Average Rating: {{ book.average_rating }}</p>
+            <p>Release year: {{ book.release_year }}</p>
+            <p>Description: {{ book.description }}</p>
+
+            <a href ="{{url_for('book_bp.add_review', id=book.id)}}">Leave Review</a>
+            {% if should_have_form %}
+              {% include 'book/add_to_list.html' %}
+            {% endif %}
+            <p>Reviews: </p>
+            <ul>
+                {% for review in reviews %}
+                    <li>
+                        Rating:
+                        {% from 'macros.html' import review_stars %}
+                        {{ review_stars(review.rating) }}
+                        <br>
+                        Review: {{review.text}} <br>
+                        by {{ review.user }} on {{review.timestamp}}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</main>
+{% endblock %}

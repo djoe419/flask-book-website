@@ -1,0 +1,73 @@
+{% extends 'book/book_list.html' %}
+
+{% block breadcrumb_text %}
+Reading list: {{ list.name }}
+  {% if not can_modify %}
+    shared by {{ user }}
+  {% endif %}
+{% endblock %}
+
+{% block detail %}
+  {% for book in books %}
+    <div key="{{ loop.index }}" class="col-lg-4 col-12 d-flex">
+      <div class="card flex-fill">
+        <img src="{{ book.image_url }}" class="card-img-top" alt="Cover">
+        <div class="card-body">
+          <a class="card-title" href="{{ url_for('book_bp.single_book',id=book.id) }}">{{ book.title }}</a>
+          <p>Authors: {{ pp_authors(book.authors) }}</p>
+          <p>Release year: {{ book.release_year }}</p>
+          <p>Average Rating: {{ book.average_rating }} based on {{ book.rating_count }} ratings.</p>
+          <p>Ebook: {{ book.ebook }}</p>
+        {{ can_modify }}
+          {% if can_modify %}
+            <form action="{{handler_url}}" method="post">
+              {{form.csrf_token}}
+              {{ form.reading_list_id }}
+              <button class="form-control" type="submit" name="book_id" value="{{ book.id }}">
+                Remove from list
+              </button>
+            </form>
+          {% endif %}
+{#                <p>{{ book.description }}</p>#}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+{% block pagination %}
+      {% if True %}
+      <div class="row">
+        <div class="col">
+          <div class="ltn__pagination-area text-center">
+            <div class="ltn__pagination ltn__pagination-2 mb-50">
+              <ul>
+                <li>
+                  <a href="{{ url_for('book_bp.display_reading_list', page=(current_page-1), bpp=books_per_page, id=id) }}" class="{{ should_disable_first }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                  </a>
+                </li>
+                  {% for i in range(number_of_pages) %}
+                    <li class="{{ "active" if current_page==i + 1 }}">
+                      <a href="{{ url_for('book_bp.display_reading_list', page=i + 1, bpp=books_per_page, id=id) }}"
+
+                      >
+                        {{ i + 1 }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                <li>
+                  <a href="{{ url_for('book_bp.display_reading_list', page=(current_page + 1), bpp=books_per_page, id=id) }}" class="{{ should_disable_last }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+{% endblock %}

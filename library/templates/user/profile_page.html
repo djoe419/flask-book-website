@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block breadcrumb %}
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ltn__breadcrumb-inner text-center">
+        <h1 class="ltn__page-title text-color">Welcome back, {{ user.name }}</h1>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col col-lg-4 col-12">
+        {% include 'user/recent_review.html' %}
+      </div>
+      <div class="col col-lg-8 col-12">
+        {% include 'user/shelves.html' %}
+      </div>
+    </div>
+  </div>
+{#      {% endif %}#}
+{% endblock %}

@@ -1,0 +1,28 @@
+{{ handle_url }}
+<div class = "form-wrapper">
+    <form action="{{handler_url}}" method="POST">
+        {{form.book_id}}
+        {{form.original_url}}
+        {{form.method}}
+        {{form.csrf_token}}
+
+        <label for="select">Add to a reading list: </label>
+        <select class="dropdown" name="name_list" id="select">
+            {% for value, name in form.name_list.choices %}
+            <option value="{{ value }}">{{ name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <div class = "form-field">{{form.new_name.label}}
+            {{ form.new_name(size = 20, placeholder="name for new reading list", class="textarea", cols="20", rows="1", wrap="hard")}}
+{#            {% if form.reading.errors %}#}
+{#                <ul class="errors">#}
+{#                    {% for error in form.reading_list.errors %}#}
+{#                    <li>{{error}}</li>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
+{#            {% endif %}#}
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</div>

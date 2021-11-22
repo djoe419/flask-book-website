@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<main id="main">
+    <div style="clear:both">
+        <h2>{{ book.title }}</h2>
+        <p>Authors: </p>
+        {% with authors=book.authors %}
+            {% include "book/print_authors.html" %}
+        {% endwith %}
+
+        <p>Ebook: {{ book.ebook }}</p>
+        <p>Average Rating: {{ book.average_rating }}</p>
+        <p>Release year: {{ book.release_year }}</p>
+        <p>Description: {{ book.description }}</p>
+        <div class="form-wrapper">
+            <form action="{{handler_url}}" method="post">
+                {{form.book_id}} <!-- Need to include this hidden field as it tracks the article being commented. -->
+                {{form.csrf_token}} <!-- Need to include this token - Flask WTForms requires it. -->
+
+                <label for="rating">Rating</label>
+                <select class="dropdown" name="rating" id="rating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <br>
+                <div class ="form-field">{{form.review.label}}
+                    {{form.review(size = 100, placeholder="type your review", class="textarea", cols="50", rows="6", wrap="hard")}}
+                    {% if form.review.errors %}
+                        <ul class="errors">
+        	            {% for error in form.review.errors %}
+        		            <li>{{error}}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

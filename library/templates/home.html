@@ -1,0 +1,27 @@
+{% extends 'layout.html' %} {% block content %}
+<main id="main">
+    <div class ="wrapper">
+        <div class="row justify-content-center">
+          <div class="col-6 align-self-center text-center">
+            <h1>Find the book you love here</h1>
+          </div>
+        </div>
+        <form class="search_form" action="{{ url_for('book_bp.process_search_book') }}" method="GET">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputSelect01">Search by </label>
+              </div>
+              <select class="custom-select" name="method" id="inputSelect01">
+                  <option value="Title" selected>Title</option>
+                  <option value="Author">Author</option>
+                  <option value="Publisher">Publisher</option>
+                  <option value="Release Year">Release Year</option>
+                  <option value="Year since">Year since</option>
+              </select>
+              <input type ="text" class ="form-control" placeholder="Search..." name="param">
+              <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

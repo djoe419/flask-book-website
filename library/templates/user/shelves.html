@@ -1,0 +1,41 @@
+<div class="row">
+  <h2>Your reading lists:</h2>
+</div>
+<div class="tab-pane fade active show" id="liton_product_grid">
+  <div class="ltn__product-tab-content-inner ltn__product-grid-view">
+    <div class="row">
+      {% for list in shelve.lists %}
+      <div key="{{ loop.index }}" class="col-lg-4 col-12 d-flex">
+        <div class="card flex-fill">
+          <div class="card-body">
+            <a class="card-title" href="{{ url_for('book_bp.display_reading_list', id=list.id) }}">
+              {{ list.name }}({{ list.size }}): {{ "Public" if list.is_public else "Private" }}
+            </a>
+            <form action="{{public_url}}" method="post">
+              {{form.csrf_token}}
+              <button class="form-control" type="submit" name="reading_list_id" value="{{ list.id }}">
+                Change to {{ "Public" if not list.is_public else "Private" }}
+              </button>
+            </form>
+            {% if not list.is_permanent %}
+              <form action="{{delete_url}}" method="post">
+              {{form.csrf_token}}
+              <button class="form-control" type="submit" name="reading_list_id" value="{{ list.id }}">
+                Delete list
+              </button>
+            </form>
+            {% endif %}
+            <br>
+            {% if list.books|length > 0 %}
+              <a class="card-link" href="{{ url_for('book_bp.single_book',id=list.books[0].id) }}"><span>Last book:</span> {{ list.books[0].title }}</a>
+            {% endif %}
+          </div>
+          {% if list.books|length > 0 %}
+            <img src="{{ list.books[0].image_url }}" class="card-img-bottom" alt="Cover">
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

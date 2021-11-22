@@ -1,0 +1,35 @@
+<header class="ltn__header-area ltn__header-3 section-bg-6">
+    <!-- ltn__header-middle-area start -->
+    <div class="ltn__header-middle-area">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="site-logo navbar-brand">
+                    <img src="{{ url_for('static', filename='library.svg') }}" alt="library logo" width="50" height="50">
+                    <h1 id="brand-name">Books Zone</h1>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class='navbar-nav mr-auto'>
+                        <li class="nav-item" >
+                            <a class="nav-link" href="{{ url_for('home_bp.home') }}">Home</a>
+                        </li>
+                        <li class="nav-item" >
+                            <a class="nav-link" href="{{ url_for('authentication_bp.register') }}">Register</a>
+                        </li>
+                        <li class="nav-item" >
+                            <a class="nav-link" href="{{ url_for('authentication_bp.login') }}">Login</a>
+                        </li>
+                        <li class="nav-item" >
+                            <a class="nav-link" href="{{ url_for('authentication_bp.logout') }}">Logout</a>
+                        </li>
+                        <li class="nav-item" >
+                            <a class="nav-link" href="{{ url_for('user_bp.get_profile') }}">My Profile</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>

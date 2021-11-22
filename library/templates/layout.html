@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Books Zone App</title>
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-icons.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}"/>
+  </head>
+
+  <body>
+    <div class="body-wrapper">
+      {% include 'header.html' %}
+      {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+      {% endfor %}
+      <div class="ltn__breadcrumb-area ltn__breadcrumb-area-4">
+        <div class="container">
+          {% block breadcrumb %}
+          {% endblock %}
+        </div>
+      </div>
+
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col col-lg-10 col-12 align-self-center">
+            <div class="tab-content" id="liton_product_content">
+              {% block content %} {% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="nav-footer">
+        {% include 'footer.html' %}
+      </div>
+      {{ bootstrap.load_js() }}
+    </div>
+  </body>
+</html>
